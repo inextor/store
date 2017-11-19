@@ -1,0 +1,115 @@
+
+
+header
+{
+	height					: 45px;
+	position				: absolute;
+	top						: 0;
+	right					: 0;
+	left					: 0;
+}
+
+.page main
+{
+	margin					: 70px auto 10px auto;
+	background-color		: white;
+	max-width				: 800px;
+}
+
+/*
+.page
+{
+	width					: 100%;
+	background-color		: #eeeeee;
+	height					: 100%;
+	min-height				: 600px;
+}
+
+*/
+
+.page header
+{
+    background-color: #ffffff;
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.3);
+    z-index: 2;
+}
+
+.page header .L_header_buttons
+{
+	display					: -ms-flexbox;
+	display					: -webkit-flex;
+	display					: flex;
+	-webkit-flex-direction	: row;
+	-ms-flex-direction		: row;
+	flex-direction			: row;
+	-webkit-flex-wrap		: nowrap;
+	-ms-flex-wrap			: nowrap;
+	flex-wrap				: nowrap;
+	-webkit-justify-content	: flex-start;
+	-ms-flex-pack			: start;
+	justify-content			: flex-start;
+	-webkit-align-content	: stretch;
+	-ms-flex-line-pack		: stretch;
+	align-content			: stretch;
+	-webkit-align-items		: center;
+	-ms-flex-align			: center;
+	align-items				: center;
+}
+.L_header_buttons {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.L_header_buttons>a, .L_header_buttons>div
+{
+	-webkit-order			: 0;
+	-ms-flex-order			: 0;
+	order					: 0;
+	-webkit-flex			: 0 1 auto;
+	-ms-flex				: 0 1 auto;
+	flex					: 0 1 auto;
+	-webkit-align-self		: auto;
+	-ms-flex-item-align		: auto;
+	align-self				: auto;
+}
+
+
+.L_header_buttons>h1 {
+    padding: 0 10px 0 20px;
+    margin: 0;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000000;
+}
+
+.L_container {
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.3);
+    border: 1px solid #dbe1e8;
+    background: #ffffff;
+    margin: 0 auto;
+}
+

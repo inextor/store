@@ -1,0 +1,13 @@
+#pageAddProductTypeForm input
+{
+    width: 100%;
+}
+
+#pageAddProductType .L_container
+{
+	padding :	15px;
+}
+#pageAddProductTypePath
+{
+	font-weight	: normal;
+}
