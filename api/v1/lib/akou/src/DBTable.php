@@ -442,7 +442,7 @@ class DBTable
 		$result			= $this->_conn->query( $this->_lastQuery );
 		$class_name		= get_class( $this );
 
-		if($result && property_exists($class_name,'id') && !empty( $this->id )  )
+		if($result && property_exists($class_name,'id') && empty( $this->id )  )
 		{
 			$this->id = $this->_conn->insert_id;
 		}
