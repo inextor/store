@@ -21,9 +21,6 @@ try
 	if( empty( $_POST['name'] ) )
 		throw new ValidationException('Name can\'t be empty');
 
-	if( true )
-	throw new SystemException('FALLO POR QUE SI');
-
 	$product_type		= new product_type();
 	$product_type->name = $_POST['name'];
 	$product_type->assignFromArray( $_POST );

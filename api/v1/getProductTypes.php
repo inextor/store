@@ -37,12 +37,12 @@ try
 			if( $path == '' )
 				$path	= $byKey[ $parent_category ]['name'];
 			else
-				$path	= $byKey[ $parent_category ]['name'].'->'.$path;
+				$path	= $byKey[ $parent_category ]['name'].'→'.$path;
 
 			$parent_category = $byKey[ $parent_category ]['parent_product_type_id'];
 		}
 
-		$data[$i]['path'] = $path == '' ? $data[ $i ]['name'] : $path.'->'.$data[ $i ]['name'];
+		$data[$i]['path'] = $path == '' ? $data[ $i ]['name'] : $path.'→'.$data[ $i ]['name'];
 	}
 
 
