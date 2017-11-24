@@ -5,6 +5,11 @@ class Util
 		window.addEventListener('load' ,callback );
 	}
 
+	static txt2html( h )
+	{
+		return this.text2html( h );
+	}
+
 	static text2html( h )
 	{
 		var s = document.createElement('span');
@@ -337,6 +342,18 @@ class Util
 		document.body.appendChild( div );
 	}
 
+	static getRandomString(length)
+	{
+    	let text		= "";
+    	let possible	= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    	for(let i = 0; i < length; i++)
+		{
+    	    text += possible.charAt(Math.floor(Math.random() * possible.length));
+    	}
+
+    	return text;
+	}
 	static ajax(obj)
 	{
 		var xhr		= new XMLHttpRequest();
