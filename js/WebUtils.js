@@ -1,3 +1,4 @@
+/* half sugar class */
 class Util
 {
 	static addOnLoad( callback )
@@ -155,9 +156,7 @@ class Util
 			}
 			else
 			{
-				var element = form.querySelector('[name="'+i+'"][value="'+formObject[ i ]+'"]');
 
-				if( !element )
 					element = form.querySelector('[name="'+i+'"]');
 
 				if( element )
@@ -168,7 +167,13 @@ class Util
 					}
 					else
 					{
-						element.checked = formObject[ i ];
+						var element = form.querySelector('[name="'+i+'"][value="'+formObject[ i ]+'"]');
+
+						if( !element )
+							element.checked = formObject[ i ];
+						else
+							element.value = formObject[ i ];
+							
 					}
 				}
 			}
@@ -322,9 +327,7 @@ class Util
 					<div style="color: #46; background-color: white; border-radius: 5px; min-width: 270px; min-height: 50px; padding: 15px; text-align: center; overflow: hidden; position: fixed; top: 50%; left: 50%;transform: translate(-50%, -50%); z-index: 500; font-size: 16px;">
 						<div>
 							<p style="text-align:center">${html}</p>
-							<button style="display: inline-block; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; touch-action: manipulation; cursor: pointer; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;">
-								OK
-							</button>
+							<button style="color: white; font-weight: bold; inline-block; padding: 6px 12px; font-size: 14px; line-height: 30px; text-align: center;vertical-align: middle; touch-action: manipulation; cursor: pointer; user-select: none; background-color: #AAAAAA; border:none; border-radius: 4px; width: 200px;">OK</button>
 						</div>
 					</div>
 			</div>`;
