@@ -1,0 +1,32 @@
+.L_container
+{
+
+	padding	: 15px;
+}
+
+.L_container textarea
+{
+	width	: 100%;
+}
+
+#pageAddProductAddNewProduct
+{
+	background-color		: #A7048A;
+	background-image		: none;
+	border					: 1px solid #ccc;
+	border-radius			: 4px;
+	box-sizing				: border-box;
+	color					: #777777;
+	cursor					: pointer;
+	display					: block;
+	color					: #FFFFFF;
+	line-height				: 30px;
+	font-size				: 14px;
+	font-weight				: bold;
+	height					: 40px;
+	margin					: 20px;
+	min-width				: 160px;
+	padding					: 6px 12px;
+	text-align				: center;
+	text-decoration			: none;
+}
