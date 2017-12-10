@@ -1,0 +1,140 @@
+#pageSearch .product_item 
+{
+	display					: block;
+	width					: 248px;
+	margin-top				: 34px;
+	text-decoration			: none;
+	position				: relative;
+}
+
+#pageSearch .product_item > div:first-child 
+{
+	margin					: 0 auto;
+	width					: 228px;
+	height					: 228px;
+	border					: 1px solid #ddd;
+	position				: relative;
+}
+
+#pageSearch .product_item .preview 
+{
+	width					: 100%;
+	height					: 100%;
+	margin					: 0;
+	background-position		: center center;
+	background-size			: cover;
+	background-repeat		: no-repeat;
+	display					: block;
+}
+
+#pageSearch .product_item .click .mini_imagen {
+	display					: none;
+	width					: 50px;
+	height					: 100%;
+	position				: absolute;
+	top						: 0;
+	right					: 10px;
+	overflow				: hidden;
+}
+
+#pageSearch .product_item .click .mini_imagen a
+{
+	display					: block;
+	background-size			: cover;
+	background-position		: center center;
+}
+
+#pageSearch .product_item .show_more
+,#pageSearch .product_item .show_less
+{
+	width					: 0;
+	-webkit-transition		: width .5s;
+	transition				: width .5s;
+	overflow				: hidden;
+}
+
+#pageSearch .product_item div:hover > a.show_more > div 
+,#pageSearch .product_item div:hover > a.show_less > div 
+{
+    display: block;
+    width: 114px;
+}
+
+#pageSearch .product_item div:hover>a.show_more
+{
+    display             : block;
+    position            : absolute;
+    bottom              : 0;
+    left                : 0;
+    width               : 114px;
+    background-color    : rgba( 0,0,0,0.8);
+    height              : 30px;
+    line-height         : 30px;
+    text-align          : center;
+    color               : white;
+    text-decoration     : none;
+    font-weight         : normal;
+    font-size           : 14px;
+    overflow            : hidden;
+}
+
+#pageSearch .product_item div:hover>a.show_less
+{
+    display             : block;
+    position            : absolute;
+    bottom              : 0;
+    right               : 0;
+    width               : 114px;
+    background-color    : rgba( 0,0,0,0.6);
+    height              : 30px;
+    line-height         : 30px;
+    text-align          : center;
+    color               : white;
+    text-decoration     : none;
+    font-weight         : normal;
+    font-size           : 14px;
+}
+
+#pageSearch .product_item .show_more>div
+,#pageSearch .product_item .show_less>div
+{
+	display					: none;
+}
+#pageSearch .product_item .info_container
+{
+	color					: #666;
+	margin					: 16px 0 0 10px;
+	display					: inline-block;
+	width					: 183px;
+}
+
+#pageSearch .product_item .name
+{
+	width					: 95%;
+	font-weight				: 600;
+	display					: inline-block;
+	font-size				: 14px;
+	color					: #666;
+	overflow				: hidden;
+	height					: 18px;
+	white-space				: nowrap;
+	text-overflow			: ellipsis;
+	text-decoration			: none;
+}
+
+#pageSearch .product_item .price
+{
+	color					: #454545;
+	font-weight				: bold;	
+}
+#pageSearch .product_item .car
+{
+	display					: inline-block;
+	height					: 33px;
+	width					: 33px;
+	border					: 2px solid #ddd;
+	border-radius			: 5px;
+	background-image		: url(/images/iconCart.png);
+	background-position		: center center;
+	background-repeat		: no-repeat;
+}
