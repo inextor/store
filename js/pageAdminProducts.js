@@ -86,5 +86,36 @@ function pageAdminProductsMakeSearch()
 		});
 
 		Util.getById('pageAdminProductsResults').innerHTML = s;;
+		let deleteButtons	= Array.from( Util.getAll('[data-delete-product]') );
+		deleteButtons.forEach((i)=>
+		{
+			i.addEventListener('click',(evt)=>
+			{
+				Util.stopEvent( evt );
+				pId = i.getAttribute('data-delete-product');
+
+				if( confirm('Are you shure you want to delete the product') )
+				{
+					Util.ajax
+					({ 
+						url 		: 'api/v1/deleteProduct.php'
+						,method		: 'POST'
+						,dataType	:'json'
+						,data		: { id : pId }
+					})
+					.then((response)=>
+					{
+						if( !response.result )
+						{
+							Util.alert( data.msg )
+							return;
+						}
+
+						Util.alert('Success');
+						i.parent.parent.remove();
+					})
+				}
+			});
+		});
 	});
 }
