@@ -18,12 +18,13 @@
 				<input type="hidden" id="pageAdminProductsId"> 
 				<div class="L_container">
 					<form id="pageAdminProductsForm" method="POST" action="#">
-						<select id="pageAdminProductsProductTypeId">
+						<select id="pageAdminProductsProductTypeId" name="product_type_ids">
 							<option value="">Categories</option>
 						</select>
 						<input type="" name="search">
 						<input type="submit">
 					<form>
+					<div id="pageAdminProductPagination"></div>
 					<div id="pageAdminProductsResults"></div>
 				<div>
 			</main>
