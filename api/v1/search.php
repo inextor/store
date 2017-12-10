@@ -16,6 +16,7 @@ $response 	= new ApiResponse();
 try
 {
 	$limit	= 30;
+	$page	= 0;
 	$offset	= 0;
 
 	if( !empty( $_REQUEST['limit'] ) && filter_var( $_REQUTES['limit'], FILTER_VALIDATE_INT) !== false )
@@ -26,14 +27,13 @@ try
 			$limit = 50;
 	}
 
-	if( !empty( $_REQUEST['offset'] ) && filter_var( $_REQUTES['offset'], FILTER_VALIDATE_INT) !== false )
+	if( !empty( $_REQUEST['page'] ) && filter_var( $_REQUTES['page'], FILTER_VALIDATE_INT) !== false )
 	{
-		$offset	= intval( $_REQUEST['offset'] )*$limit;
+		$offset	= intval( $_REQUEST['page'] )*$limit;
 
 		if( $offset < 0 )
 			$offset	= 0;
 	}
-
 	
 	App::init();
 
@@ -41,12 +41,26 @@ try
 
 	if( !empty( $_REQUEST['search'] ) )
 	{
-		$constraints[]  =	' name LIKE "%'.DBTable::escape($_POST['search']).'%"';
+		$constraints[]  =	'name LIKE "%'.DBTable::escape($_POST['search']).'%"';
 	}
 
 	if( !empty( $_REQUEST['ids'] ) )
 	{
-		$constraints[]	=  ' id IN ('.DBTable::escapeArrayValues( $_POST['ids'] ).') ';
+		$constraints[]	=  'id IN ('.DBTable::escapeArrayValues( $_POST['ids'] ).') ';
+	}
+
+	if( !empty( $_REQUEST['product_type_ids'] ) )
+	{
+		$constraints[]	=  'product_type_id IN ('.DBTable::escapeArrayValues( $_POST['product_type_ids'] ).') ';
+	}
+
+	if( !empty( $_REQUEST['statuses'] ) )
+	{
+		$constraints[]	=  'status IN ('.DBTable::escapeArrayValues( $_POST['statuses'] ).') ';
+	}
+	else
+	{
+		$constraints[] = 'status != "DELETED"';
 	}
 
 	if( count( $constraints ) == 0)
