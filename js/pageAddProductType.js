@@ -1,5 +1,5 @@
 
-if( window.location.href.indexOf('/pageAddProductType.php') !== -1 )
+if( window.location.href.indexOf('/pageAddProductType') !== -1 )
 {
 	console.log('HELLL  YEAGH');
 	Util.addOnLoad(( evt )=>
