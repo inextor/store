@@ -1,0 +1,9 @@
+#pageAdminProducts .product > div
+{
+	display	: inline-block;
+}
+
+#pageAdminProducts .product > div:last-child
+{
+	float	: right;
+}
