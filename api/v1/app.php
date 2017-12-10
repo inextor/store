@@ -53,19 +53,19 @@ class App
 		return $string;
 	}
 
-	public static function getNewSessionSecret( $user )
+	public static function getNewSession( $user )
 	{
-		$session						= new session();
-		$session->user_id	= $user->id;
-		$session->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT']:'';
+		$session				= new session();
+		$session->user_id		= $user->id;
+		$session->user_agent	= isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT']:'';
 
 		$counter = 5;
 		$result = false;
 
 		while(!$result && ($counter--))
 		{
-			$session->secret = app::getRandomString( 20 );
-			$result			= $session->insertDb();
+			$session->secret 	= uniqId( "" ,TRUE );
+			$result				= $session->insertDb();
 		}
 
 		if( !$result )
@@ -77,7 +77,7 @@ class App
 
 	public static function getPasswordHash( $password, $timestamp	)
 	{
-		$thehash = sha1( $timestamp.'2doez'.$password );
+		$thehash = sha1( $timestamp.'trucks'.$password );
 		return $thehash;
 	}
 
