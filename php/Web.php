@@ -3,7 +3,7 @@ namespace Web;
 
 class Web
 {
-	const RELEASE_VERSION		= 11;
+	const RELEASE_VERSION		= 12;
 	const SHOW_MINIFIED_JS		= 0;
 	const SHOW_MINIFIED_CSS		= 0;
 	const SHOW_ONE_CSS_FILE		= 1;
@@ -12,7 +12,7 @@ class Web
 	{
 		return '<script src="js/PromiseUtil.js"></script>'.PHP_EOL
 				.'<script src="js/WebUtils.js"></script>'.PHP_EOL
-				.'<script src="php/getJs.php?version'.self::RELEASE_VERSION.'"></script>'.PHP_EOL;
+				.'<script src="php/getJs.php?version='.self::RELEASE_VERSION.'"></script>'.PHP_EOL;
 
 	}
 
