@@ -1,4 +1,4 @@
-if( window.location.href.indexOf('/pageEditProduct.php') !== -1 )
+if( window.location.href.indexOf('/pageEditProduct') !== -1 )
 {
 
 	Util.addOnLoad(( evt )=>
