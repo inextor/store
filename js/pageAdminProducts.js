@@ -7,7 +7,9 @@ if( window.location.href.indexOf('pageAdminProducts') !== -1 )
 		form.addEventListener('submit',(evt)=>
 		{
 			Util.stopEvent( evt );
-			pageAdminProductsMakeSearch();		
+
+
+			pageAdminProductsMakeSearch( 0 );
 		});
 
 		Util.ajax({ url : 'api/v1/getProductTypes.php', dataType:'json'}).then((response)=>
@@ -18,7 +20,7 @@ if( window.location.href.indexOf('pageAdminProducts') !== -1 )
 				return;
 			}
 
-			console.log( response.data );
+			//console.log( response.data );
 
 			var s = '<option value="">Sin Categoría</a>';
 			response.data.forEach((i)=>
@@ -28,7 +30,12 @@ if( window.location.href.indexOf('pageAdminProducts') !== -1 )
 
 			var parentSelect = Util.getById('pageAdminProductsProductTypeId');
 			parentSelect.innerHTML =s;
-			pageAdminProductsMakeSearch();
+
+
+			let querySearchObj	= pageAdminProductsParseUrl();
+			let page	= typeof querySearchObj.page !== "undefined" ? querySearchObj.page : 0;
+
+			pageAdminProductsMakeSearch( page );
 		})
 		.catch((e)=>
 		{
@@ -37,11 +44,11 @@ if( window.location.href.indexOf('pageAdminProducts') !== -1 )
 	});
 }	
 
-function pageAdminProductsMakeSearch()
+function pageAdminProductsMakeSearch(page)
 {
-
 	let form	= Util.getById('pageAdminProductsForm');
 	var obj = Util.form2Object( form );
+	obj.page	= page;
 
 	Util.ajax
 	({
@@ -58,6 +65,19 @@ function pageAdminProductsMakeSearch()
 			return;
 		}
 
+		let paginationString=  Util.getPagination
+		({
+		   	totalRows           : response.data.total
+		   	,rowsPerPage        : 30 
+		   	,currentPage        : page
+		   	,link_format        : '<a href="pageAdminProducts.html?page=PAGE_NUMBER">PAGE_TITLE</a>'
+		   	,current_page_format: '<a href="#" class="active">PAGE_TITLE</a>'
+		   	,nextTitle          : '→'
+		   	,prevTitle          : '←'
+		   	,disable_next_format: '<a href="pageAdminProducts.html?page=PAGE_NUMBER">PAGE_TITLE</a>'
+		   	,disable_prev_format: '<a href="pageAdminProducts.html?page=PAGE_NUMBER">PAGE_TITLE</a>'
+		});
+
 		var paginationSrc	= '';
 		var product_attrs	= {};
 		response.data.product_attrs.forEach( i => product_attrs[ i.id ] = i );
@@ -66,6 +86,7 @@ function pageAdminProductsMakeSearch()
 
 		response.data.products.forEach((product)=>
 		{
+			
 			//var attrs	= response.data.product_attr_values
 			//	.filter( value = value.product_id == product.id )
 			//	.sort((a ,b)=> a.name.localeCompare( b.name ) );
@@ -112,10 +133,24 @@ function pageAdminProductsMakeSearch()
 						}
 
 						Util.alert('Success');
-						i.parent.parent.remove();
+						i.parentElement.parentElement.remove();
 					})
 				}
 			});
 		});
 	});
+}
+
+					
+
+
+function pageAdminProductsParseUrl() 
+{
+	var query = location.search.substr(1);
+	var result = {};
+	query.split("&").forEach(function(part) {
+	  var item = part.split("=");
+	  result[item[0]] = decodeURIComponent(item[1]);
+	});
+	return result;
 }
