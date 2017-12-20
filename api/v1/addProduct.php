@@ -73,5 +73,6 @@ catch(\Exception $e)
 	$response->setError( $e );
 }
 
+DBTable::rollback();
 $response->setResult( 0 );
 $response->output();
