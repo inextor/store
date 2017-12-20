@@ -1,6 +1,5 @@
-if( window.location.href.indexOf('/pageEditProduct') !== -1 )
+if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.href.indexOf('pageEditProductType') === -1 )
 {
-
 	Util.addOnLoad(( evt )=>
 	{
 
