@@ -57,6 +57,24 @@ class Util
 			.replace(/[\r\n]/g, pCR);
 	}
 
+	static getSearchParameters()
+	{
+    	var params = {};
+		var prmstr = window.location.search.substr(1);
+		if( prmstr === null || prmstr  === "" )
+		{
+			return params; 
+		}
+		var prmarr = prmstr.split("&");
+
+		prmarr.forEach((i)=>{
+    	    var tmparr = i.split("=");
+    	    params[ tmparr[0] ] = decodeURIComponent(tmparr[1] );
+		});
+
+		return params;
+	}
+
 	static fireChangeEvent(selector)
 	{
 		let element		= document.querySelector( selector );
