@@ -49,9 +49,11 @@ try
 		$constraints[]	=  'id IN ('.DBTable::escapeArrayValues( $_POST['ids'] ).') ';
 	}
 
+	ChromePhp::log( 'SQL is ',$sqlSearch );
+
 	if( !empty( $_REQUEST['product_type_ids'] ) )
 	{
-		$constraints[]	=  'product_type_id IN ('.DBTable::escapeArrayValues( $_POST['product_type_ids'] ).') ';
+		$constraints[]	=  'product_type_id IN ('.DBTable::escapeCSV( $_REQUEST['product_type_ids'] ).') ';
 	}
 
 	if( !empty( $_REQUEST['statuses'] ) )
@@ -114,6 +116,7 @@ try
 		,'product_attr_values'	=> array_values( $product_attr_values )
 		,'product_attrs'		=> array_values( $product_attrs )
 		,'total'				=> $total
+		,'sql'				=> $sqlSearch
 	]);
 
 	$response->output();
