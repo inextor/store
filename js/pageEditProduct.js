@@ -7,6 +7,7 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 		let product_id 		= productInput.value;
 
 		let form = Util.getById('pageEditProductForm');
+
 		pageEditProductInitProductTypeSelector().then(()=>
 		{
 			return Util.ajax
@@ -116,6 +117,60 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 				}
 			});
 		})
+
+		let imageContainers	= Array.from( Util.getAll('[data-upload="image"]') );
+		imageContainers.forEach((i)=>
+		{
+			let fileInput	= i.querySelector('input[type="file"]');
+			let bar 		= i.querySelector('.indicator');
+
+			fileInput.addEventListener('change',(evt)=>
+			{
+				if( fileInput.files.length > 0 )	
+				{
+					let data =  new FormData();
+					data.append('file',fileInput.files.item( 0 ) );
+
+					Util.ajax
+					({
+
+						url			: '/api/v1/addImage.php'
+						,headers	: { 'Content-type': 'multipart/form-data' }
+						,data		: data
+						,dataType	: 'json'
+						,method		: 'POST'
+						,uploadProgress 	: (evt)=>
+						{
+							if( !isNaN( evt.loaded ) && !isNaN( evt.total ) )
+							{
+								let percent = (evt.loaded/evt.total)*100;
+								console.log( percent );
+								bar.setAttribute('style','width:"'+percent.toFixed(2)+'%');
+							}
+						}
+					})
+					.then((response)=>
+					{
+						if( response.result )
+						{
+							let ic				= i.querySelector('.image_container');
+							ic.setAttribute("style",'background-image: url(/api/v1/getImageBin.php?id='+response.data.id+'&width=200&height=200);  background-size: cover;background-position: center center;');
+							let idContainer		= i.querySelector('input[type="hidden"]');
+							idContainer.value	= response.data.id;
+						}
+						else
+						{
+							alert( response.msg );
+						}
+					})
+					.catch((error)=>
+					{
+						console.log( error );	
+					});
+				}
+			});     
+		});     	
+
 	});
 }
 
@@ -149,6 +204,7 @@ function pageEditProductInitProductTypeSelector()
 			}
 		});
 	})
+
 }
 
 function pageEditProductOnCategorySelect(productTypeId)

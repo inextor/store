@@ -133,7 +133,7 @@ Class Image
 		return FALSE;
 	}
 
-	static function resize_image( $width, $height=0 )
+	function resize_image( $width, $height=0 )
 	{
 		//Get the new DImensions
 		//list($original_width, $original_height) = getimagesize( $image );
@@ -363,7 +363,7 @@ Class Image
 		$image_content_string	= $this->getImageData( $content_type ); 
 		$image_size				= \strlen( $image_content_string );
 		\header( 'Content-Length: ' . $image_size );
-		return $image_content_string;
+		echo $image_content_string;
 	}
 
 	function getResizeData($image_width, $image_height, $max_width, $max_height)

@@ -14,10 +14,13 @@
 				<a href="#">Login</a>
 			</header>
 			<main>
+				<h2>Edit Category Type</h2>
 				<div class="L_container">
-					<h2 id="pageEditProductTypeName"></h2>
+					<label>Category Name</label>
+					<input type="text" id="pageEditProductTypeName">
 					<a href="">Add new Attribute</a>
 					<div id="pageEditProductTypeFormContainers"></div>
+					<a href="button" id="pageEditProductTypeSaveButton">Save</a>
 				<div>
 			</main>
 		</div>

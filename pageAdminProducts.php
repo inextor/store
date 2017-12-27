@@ -17,6 +17,7 @@
 			<main>
 				<input type="hidden" id="pageAdminProductsId"> 
 				<div class="L_container">
+					<a href="pageAddProduct.php">Add New Product</a>
 					<form id="pageAdminProductsForm" method="POST" action="#">
 						<select id="pageAdminProductsProductTypeId" name="product_type_ids">
 							<option value="">Categories</option>

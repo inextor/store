@@ -16,6 +16,17 @@
 			</header>
 			<main>
 				<div class="L_container">
+					<div>
+						<h2>Images</h2>
+						<div data-upload="image">
+							
+							<input type="hidden" data-image-id="">
+							<div class="image_container">
+								<input data-role="none" name="image" accept="image/*" type="file" />
+							</div>
+							<div class="indicator"></div>
+						</div>
+					<div>
 					<form id="pageEditProductForm" method="POST" action="#">
 						<input type="hidden" id="pageEditProductId" name="id" value="<?=htmlspecialchars($_REQUEST['id'],ENT_COMPAT)?>">
 						<div>Category</div>
