@@ -13,7 +13,6 @@ $response	= new ApiResponse();
 
 try
 {
-
 	if( empty( $_POST['email'] ) )
 		throw new ValidationException('Email can\'t be empty');
 
@@ -28,17 +27,16 @@ try
 		throw new ValidationException('The username or password you entered is incorrect.',$sql_user);
 	}
 
-
-	$encripted_password = App::getPasswordHash( $_POST['password'], $user->created);
+	$encripted_password = App::getPasswordHash( $_POST['password'] ,$user->created );
 
 	if( $user->password == $encripted_password	)
 	{
 		$user_info	= App::getUserInfo( $user );
-		$session_secret= App::getNewSessionSecret( $user );
+		$session_secret= App::getNewSession( $user );
 
 		if( !$session_secret)
 		{
-			throw new SystemException('Ocurrio un error inesperado');
+			throw new SystemException('An error occurred please try again later');
 		}
 
 		$response->setResult( 1 );

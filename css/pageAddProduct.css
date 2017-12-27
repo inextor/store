@@ -1,12 +1,12 @@
 .L_container
 {
 
-	padding	: 15px;
+	padding					: 15px;
 }
 
 .L_container textarea
 {
-	width	: 100%;
+	width					: 100%;
 }
 
 #pageAddProductAddNewProduct
@@ -29,4 +29,65 @@
 	padding					: 6px 12px;
 	text-align				: center;
 	text-decoration			: none;
+}
+#pageAddProduct div[data-upload="image"]
+{
+	height					: 200px;
+	width					: 200px;
+	overflow				: hidden;
+	position				: relative;
+	cursor					: pointer;
+	display					: inline-block;
+	margin					: 15px;
+	border					: 1px solid #eeeeee;
+}
+#pageAddProduct div[data-upload="image"]>div.image_container
+{
+    /*Using a background color, but you can use a background image to represent a button*/
+	background-color		: #FFFFFF;
+	background-image		: url(/images/image.png);
+	-webkit-transition		: 0.5s all ease-in-out;
+	-moz-transition			: 0.5s all ease-in-out;
+	-ms-transition			: 0.5s all ease-in-out;
+	-o-transition			: 0.5s all ease-in-out;
+	transition				: 0.5s all ease-in-out;
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective		: 1000;
+	opacity					: 0.80;
+	height					: 200px;
+	width					: 200px;
+	position				: absolute;
+	top						: 0;
+	left					: 0;
+	background-size			: cover;
+	background-position		: center center;
+}
+
+#pageAddProduct div[data-upload="image"]>.image_container:hover
+{
+	-webkit-transform		: scale(1.2);
+	-moz-transform			: scale(1.2);
+	-o-transform			: scale(1.2);
+	transform				: scale(1.2);
+	opacity					: 0.95;
+}
+
+#pageAddProduct [data-upload="image"] input[type="file"]
+{
+	width					: 100%;
+	height					: 100%;
+	position				: absolute;
+	top						: 0;
+	right					: 0;
+	bottom					: 0;
+	cursor					: pointer;
+	padding					: 0px;
+	margin					: 0;
+	opacity					: 0;
+	filter					: alpha(opacity=0)
+}
+#pageAddProduct form > div
+{
+	line-height				: 24px;
+	padding					: 5px 0;
 }

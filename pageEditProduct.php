@@ -19,8 +19,24 @@
 					<div>
 						<h2>Images</h2>
 						<div data-upload="image">
-							
 							<input type="hidden" data-image-id="">
+							<input type="hidden" data-image-order="1">
+							<div class="image_container">
+								<input data-role="none" name="image" accept="image/*" type="file" />
+							</div>
+							<div class="indicator"></div>
+						</div>
+						<div data-upload="image">
+							<input type="hidden" data-image-id="">
+							<input type="hidden" data-image-order="2">
+							<div class="image_container">
+								<input data-role="none" name="image" accept="image/*" type="file" />
+							</div>
+							<div class="indicator"></div>
+						</div>
+						<div data-upload="image">
+							<input type="hidden" data-image-id="">
+							<input type="hidden" data-image-order="3">
 							<div class="image_container">
 								<input data-role="none" name="image" accept="image/*" type="file" />
 							</div>

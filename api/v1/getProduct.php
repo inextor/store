@@ -27,54 +27,75 @@ try
 	if( !$product->load() )
 		throw new ValidationException('Product not found');
 
-	$product_type		= new product_type();
-	$product_type->id	= $product->product_type_id;
+	$parents	= [];
+	$attrs		= [];
 
-
-	$pav_sql				= 'SELECT * FROM product_attr_value WHERE product_id = '.$product->id;
-	$product_attr_values	= DBTable::getArrayFromQuery( $pav_sql );
-
-	if( !$product_type->load() )
-		throw new NotFoundException('The product type was not found');
-
-	$parents		= [];
-	$parents_ids	= [ $product_type->id ];
-
-	$previous		= $product_type;
-
-	while( $previous->parent_product_type_id !== NULL )
+	if( !empty( $product->product_type_id ) )
 	{
-		$ppp 		= new product_type();
-		$ppp->id	= $previous->parent_product_type_id;
+		$product_type		= new product_type();
+		$product_type->id	= $product->product_type_id;
 
-		if( !$ppp->load() )
+
+		$pav_sql				= 'SELECT * FROM product_attr_value WHERE product_id = '.$product->id;
+		$product_attr_values	= DBTable::getArrayFromQuery( $pav_sql );
+
+		if( !$product_type->load() )
+			throw new NotFoundException('The product type was not found');
+
+		$parents_ids	= [ $product_type->id ];
+
+		$previous		= $product_type;
+
+		while( $previous->parent_product_type_id !== NULL )
 		{
-			throw new SystemException('An error occurred please try again later');
-			//??? WHAT TO DO
+			$ppp 		= new product_type();
+			$ppp->id	= $previous->parent_product_type_id;
+
+			if( !$ppp->load() )
+			{
+				throw new SystemException('An error occurred please try again later');
+				//??? WHAT TO DO
+			}
+
+			$parents[] 		= $ppp->toArray();
+			$parents_ids[]	= $ppp->id;
+			$previous	= $ppp;
 		}
 
-		$parents[] 		= $ppp->toArray();
-		$parents_ids[]	= $ppp->id;
-		$previous	= $ppp;
+		$ids	= DBTable::escapeArrayValues( $parents_ids );
+
+		if( $ids !== "" )
+		{
+			$sqlAttrs	= 'SELECT * FROM product_attr WHERE product_type_id IN ('.$ids.')';
+			$attrs		= DBTable::getArrayFromQuery( $sqlAttrs );
+		}
 	}
 
-	$ids	= DBTable::escapeArrayValues( $parents_ids );
-	$attrs	= [];
+	$images		= [];
+	$sql_images	= 'SELECT image.*,product_image.order 
+		FROM product_image 
+		JOIN image ON image.id = product_image.image_id
+		WHERE product_image.product_id = "'.DBTable::escape( $_POST['id'] ).'" ORDER BY product_image.order ASC';
 
-	if( $ids !== "" )
+
+
+	$images_res	 =	DBTable::query( $sql_images );
+
+	while( $row = $images_res->fetch_assoc() )
 	{
-		$sqlAttrs	= 'SELECT * FROM product_attr WHERE product_type_id IN ('.$ids.')';
-		$attrs		= DBTable::getArrayFromQuery( $sqlAttrs );
+		$image		= image::createFromArray( $row );
+		$images[] 	= $image->toArray();
 	}
 
 	$response->setResult( 1 );
 	$response->setData
 	([
 		'product'				=> $product->toArray()
-		,'product_type'			=> $product_type->toArray()
+		,'product_type'			=> $product_type !== NULL ? $product_type->toArray() : null
 		,'parents'				=> $parents
 		,'product_type_attrs'	=> $attrs
 		,'product_attr_values'	=> $product_attr_values
+		,'images'				=> $images
 	]);
 
 	$response->output();

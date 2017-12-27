@@ -78,6 +78,30 @@ try
 	}
 
 
+	if( !empty( $_POST['images_ids'] ) )
+	{
+		$deleteQuery	= 'DELETE FROM product_image WHERE product_id="'.DBTable::escape($product->id ).'"';
+		DBTable::query( $deleteQuery );
+		ChromePhp::log( 'DELETE QUERY IS ', $deleteQuery );
+
+		foreach( $_POST['images_ids'] as $i=>$image_id )
+		{
+			$image = new image();
+			$image->id = $image_id;
+			if( !$image->load() )
+			{
+				throw new ValidationException('Image with id"'.$image_id.' Does not exists');
+			}
+			$product_image =  new product_image();
+			$product_image->image_id	= $image_id;
+			$product_image->product_id	= $product->id;
+			$product_image->order		= $i;
+
+			if( !$product_image->insertDb() )
+				throw new SystemException('An error occurred while saving the images, please try again later');
+		}
+	}
+
 	$response->setResult( 1 );
 	$response->setData(array
 	(

@@ -20,6 +20,7 @@
 					<h1 data-product="name"></h1>
 					<span data-product="description"></span>
 					<span data-product="price"></span>
+					<div data-product="video"></div>
 					<div id="pageProductValues"></div>
 				<div>
 			</main>

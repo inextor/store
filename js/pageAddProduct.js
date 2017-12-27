@@ -17,6 +17,25 @@ if( window.location.href.indexOf('/pageAddProduct.php') !== -1 )
 				return;
 			}
 
+			let imagesIds	= [];
+
+			var images		= Array.from( Util.getAll('#pageAddProduct [data-upload="image"]') );
+
+			images.forEach((i)=>
+			{
+				let id = i.querySelector('input[type="hidden"]').value;
+
+				if( id !== '' && id !== null )
+				{
+					imagesIds.push( id );
+				}
+			});
+
+			//Do somenthing with the product images
+
+
+
+
 			let attrInputs	= Array.from( Util.getAll('input[data-product-attr-id]') );
 
 			let attrValues	= attrInputs.map( i =>
@@ -26,8 +45,9 @@ if( window.location.href.indexOf('/pageAddProduct.php') !== -1 )
 
 			let data	=
 			{
-				product					: Util.form2Object( form )
-				,product_attr_values	: attrValues
+				product				 : Util.form2Object( form )
+				,product_attr_values : attrValues
+				,images_ids			 : imagesIds
 			};
 
 			Util.ajax
@@ -46,6 +66,7 @@ if( window.location.href.indexOf('/pageAddProduct.php') !== -1 )
 
 				Util.alert('Success',()=>
 				{ 
+					window.location.href= 'pageDashboard.php';
 				//	window.history.go(-1 ) 
 				});
 			})
@@ -67,6 +88,64 @@ if( window.location.href.indexOf('/pageAddProduct.php') !== -1 )
 
 
 		})
+
+		/* IMAGES */
+
+		let imageContainers	= Array.from( Util.getAll('#pageAddProduct [data-upload="image"]') );
+
+		imageContainers.forEach((i)=>
+		{
+			console.log('There is a '+i+' Containers');
+			let fileInput	= i.querySelector('input[type="file"]');
+			let bar 		= i.querySelector('.indicator');
+
+			fileInput.addEventListener('change',(evt)=>
+			{
+				if( fileInput.files.length > 0 )	
+				{
+					let data =  new FormData();
+					data.append('file',fileInput.files.item( 0 ) );
+
+					Util.ajax
+					({
+
+						url			: '/api/v1/addImage.php'
+						,headers	: { 'Content-type': 'multipart/form-data' }
+						,data		: data
+						,dataType	: 'json'
+						,method		: 'POST'
+						,uploadProgress 	: (evt)=>
+						{
+							if( !isNaN( evt.loaded ) && !isNaN( evt.total ) )
+							{
+								let percent = (evt.loaded/evt.total)*100;
+								console.log( percent );
+								bar.setAttribute('style','width:"'+percent.toFixed(2)+'%');
+							}
+						}
+					})
+					.then((response)=>
+					{
+						if( response.result )
+						{
+							let ic				= i.querySelector('.image_container');
+							ic.setAttribute("style",'background-image: url(/api/v1/getImageBin.php?id='+response.data.id+'&width=200&height=200);  background-size: cover;background-position: center center;');
+							let idContainer		= i.querySelector('input[type="hidden"]');
+							idContainer.value	= response.data.id;
+						}
+						else
+						{
+							alert( response.msg );
+						}
+					})
+					.catch((error)=>
+					{
+						console.log( error );	
+					});
+				}
+			});     
+		});     	
+
 	});
 }
 

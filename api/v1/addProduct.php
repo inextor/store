@@ -33,6 +33,11 @@ try
 	if( empty( $product->price ) )
 		throw new ValidationException('price can\'t be empty');
 
+	if( empty( $product->product_type_id ) )
+	{
+		$product->product_type_id  = NULL;
+	}
+
 	if( !$product->insertDb() )
 	{
 		error_log( DBTable::$connection->error );
@@ -54,6 +59,26 @@ try
 		}
 
 		$product_attrs[]				= $product_attr_value->toArray();
+	}
+
+	if( !empty( $_POST['images_ids'] ) )
+	{
+		foreach( $_POST['images_ids'] as $i=>$image_id )
+		{
+			$image = new image();
+			$image->id = $image_id;
+			if( !$image->load() )
+			{
+				throw new ValidationException('Image with id"'.$image_id.' Does not exists');
+			}
+			$product_image =  new product_image();
+			$product_image->image_id	= $image_id;
+			$product_image->product_id	= $product->id;
+			$product_image->order		= $i;
+
+			if( !$product_image->insertDb() )
+				throw new SystemException('An error occurred while saving the images, please try again later');
+		}
 	}
 
 

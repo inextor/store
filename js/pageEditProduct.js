@@ -50,6 +50,16 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 			});
 
 			Util.object2form( response.product, form );
+			
+			let imgContainers = Array.from(Util.getAll('[data-upload="image"]') );
+
+			response.images.forEach((img, index)=>
+			{
+				imageContainers[index].querySelector('[data-image-id]').value = img.id;
+				imageContainers[index].querySelector('[data-image-id]').value = img.id;
+				imageContainers[ index ].querySelector('.image_container').setAttribute("style",'background-image: url(/api/v1/getImageBin.php?id='+img.id+'&width=200&height=200);  background-size: cover;background-position: center center;');
+			});
+
 
 		}).catch((error)=>
 		{
@@ -61,6 +71,25 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 
 		editButton.addEventListener('click',(evt)=>
 		{
+
+			let imagesIds	= [];
+
+			var images		= Array.from( Util.getAll('#pageEditProduct [data-upload="image"]') );
+
+			images.forEach((i)=>
+			{
+				let id = i.querySelector('input[type="hidden"]').value;
+
+				if( id !== '' && id !== null )
+				{
+					imagesIds.push( id );
+				}
+			});
+
+			//Do somenthing with the product images
+			//
+			console.log('Images ids', imagesIds );
+
 			Util.stopEvent( evt );
 
 			if( ! Util.checkFormNativeValidation( form ) )
@@ -80,6 +109,7 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 			{
 				product					: Util.form2Object( form )
 				,product_attr_values	: attrValues
+				,images_ids			 : imagesIds
 			};
 
 			Util.ajax
@@ -118,9 +148,11 @@ if( window.location.href.indexOf('/pageEditProduct') !== -1 && window.location.h
 			});
 		})
 
-		let imageContainers	= Array.from( Util.getAll('[data-upload="image"]') );
+		let imageContainers	= Array.from( Util.getAll('#pageEditProduct [data-upload="image"]') );
+
 		imageContainers.forEach((i)=>
 		{
+			console.log('There is a '+i+' Containers');
 			let fileInput	= i.querySelector('input[type="file"]');
 			let bar 		= i.querySelector('.indicator');
 
@@ -209,6 +241,9 @@ function pageEditProductInitProductTypeSelector()
 
 function pageEditProductOnCategorySelect(productTypeId)
 {
+	if( productTypeId === null )
+		return Promise.resolve( true );
+
 	return Util.ajax
 	({
 		method		: 'POST'

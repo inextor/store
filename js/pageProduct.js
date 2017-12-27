@@ -26,9 +26,17 @@ if( window.location.href.indexOf('/pageProduct') !== -1 )
 			for(let i in response.data.product )
 			{
 				let t = Util.getFirst('[data-product="'+i+'"]');
-				if( t !== null )
+
+				if( i=="video_url" )
 				{
-					t.textContent = Util.txt2html( response.data.product[i] );
+					t.innerHTML = '<a href="'+response.data.product[i]+'">View Video</a>';
+				}
+				else
+				{
+					if( t !== null )
+					{
+						t.textContent = Util.txt2html( response.data.product[i] );
+					}
 				}
 			}
 
