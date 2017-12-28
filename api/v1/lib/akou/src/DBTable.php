@@ -224,7 +224,7 @@ class DBTable
 			{
 				if( $dictionaryIndex )
 				{
-					if( !empty( $_obj->{ $dictionaryIndex } ) )
+					if( !empty( $row[ $dictionaryIndex ] ) )
 						$result[ $row[ $dictionaryIndex ] ] =  $row;
 				}
 				else
