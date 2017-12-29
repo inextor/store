@@ -25,7 +25,7 @@ try
 	DBTable::autocommit( FALSE );
 
 	$product_type		= new product_type();
-	$product_type->name = $_POST['id'];
+	$product_type->id	= $_POST['id'];
 
 	if( ! $product_type->load() )
 		throw new NotFoundException('Product type was not found'.$product_type->getLastQuery);
@@ -51,7 +51,10 @@ try
 
 		if( !$product_attr->updateDb() )
 			throw new ValidationException();
+
 	}
+
+	DBTable::commit();
 
 	$response->setResult( 1 );
 	$response->setData( 'Success' );
