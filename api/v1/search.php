@@ -81,9 +81,11 @@ try
 
 	ChromePhp::log( 'SQL is ',$sqlSearch );
 
-	$products				= DBTable::getArrayFromQuery( $sqlSearch );
+	$products				= DBTable::getArrayFromQuery( $sqlSearch,'id' );
 	$totalRes				= DBTable::query('SELECT FOUND_ROWS()');
 	$total					= count( $products );
+
+	//print_r( $products );
 
 	if( $total > 0 && $totalRes !== FALSE )
 	{
@@ -95,6 +97,7 @@ try
 	$product_ids			= array_keys( $products );
 	$product_attr_values	= array();
 	$product_attrs			= array();
+	$product_images			= array();
 
 	if( count( $product_ids ) > 0 )
 	{
@@ -104,10 +107,33 @@ try
 
 		if( count( $pa_ids ) > 0 )
 		{
-			$pa_sql			= 'SELECT * FROM product_attr WHERE id IN('.DBTable::escape( $pa_ids ).')';
+			$pa_sql			= 'SELECT * FROM product_attr WHERE id IN('.DBTable::escapeArrayValues( $pa_ids ).')';
 			$product_attrs	= DBTable::query( $pa_sql, 'id' );
 		}
+
+		$pImagesSql = 'SELECT  '.image::getUniqSelect('i').'
+			,'.product_image::getUniqSelect('pi').'
+			FROM product_image AS pi
+			JOIN  image AS i ON pi.image_Id = i.id
+			WHERE pi.product_id IN('.DBTable::escapeArrayValues( $product_ids ).')';
+
+	//	echo $pImagesSql;
+
+		$res	= DBTable::query( $pImagesSql );
+
+		while( $row = $res->fetch_assoc() )
+		{
+			$image			= image::createFromUniqArray( $row, 'i' );
+			$product_image	= product_image::createFromUniqArray( $row, 'pi' );
+			$product_images[] = array
+			(
+				'image'			=>$image->toArray()
+				,'product_image'=>$product_image->toArray()  
+			);
+		}
 	}
+
+
 
 	$response->setResult( 1 );
 	$response->setData
@@ -115,8 +141,9 @@ try
 		'products'				=> array_values( $products )
 		,'product_attr_values'	=> array_values( $product_attr_values )
 		,'product_attrs'		=> array_values( $product_attrs )
+		,'images'				=> $product_images
 		,'total'				=> $total
-		,'sql'				=> $sqlSearch
+		,'sql'					=> $sqlSearch
 	]);
 
 	$response->output();
