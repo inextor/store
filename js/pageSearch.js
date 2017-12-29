@@ -84,14 +84,23 @@ function pageSearchMakeSearch()
 			//var attrs	= response.data.product_attr_values
 			//	.filter( value = value.product_id == product.id )
 			//	.sort((a ,b)=> a.name.localeCompare( b.name ) );
-				
+		
+			
+			let images		= response.data.images.filter(i => i.product_image.product_id == product.id );
+			let image_url	=  images.length === 0  ? '/images/image.png' : `/api/v1/getImage.php?id=${images[0].image.id}`;
+
+			let otherImages	= images.filter((i,index) => index > 0 );
+			let icode		= '';
+
+			otherImages.forEach((i)=>
+			{
+				icode += `<a data-image-product="${product.id}" style="background-image: url(/api/v1/getImage.php?id=${i.image.id});" href="#"></a>`;
+			});
+
 			s+=`<div class="product_item">
 					<div>
-						<a class="preview" data-product-preview="${product.id}" href="pageProduct.php?id=${product.id}" style="background-image: url(images/engine1.jpg);"></a>
-						<div class="mini_imagen">
-							<a data-image-product="${product.id}" style="background-image: url(images/engine2.jpg);" href="#"></a>
-							<a data-image-product="${product.id}" style="background-image: url(images/engine3.jpg);" href="#"></a>
-						</div>
+						<a class="preview" data-product-preview="${product.id}" href="pageProduct.php?id=${product.id}" style="background-image: url(${image_url});"></a>
+						<div class="mini_imagen">${icode}</div>
 						<a href="pageProduct.php?id=4018" class="show_more">
 							<div>Ver más</div>
 						</a>
