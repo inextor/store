@@ -261,6 +261,7 @@ function pageEditProductOnCategorySelect(productTypeId)
 		var s = '';
 
 		let reverseParents = response.data.parents.reverse();
+		reverseParents.push( response.data.product_type );
 
 		reverseParents.forEach((p)=>
 		{
