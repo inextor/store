@@ -43,7 +43,7 @@ try
 	}
 
 
-    $width  = isset( $_GET['width'] ) ? $_GET['width'] : '';
+    $width  = isset( $_GET['width'] ) ? $_GET['width'] : -1;
     $height = !empty( $_GET['height'] ) ? $_GET['height'] : 0;
     
     if( $width > 0 && $width < 2000 )
@@ -63,10 +63,12 @@ try
         header( 'Content-type: ' . $image->content_type);
 		if( !empty( $image->size  ) )
 		{
-        	header( 'Content-Length: ' . $obj_image->file_size );
+        	header( 'Content-Length: ' . $image->size );
 		}
 
-		echo file_get_contents( $name_file_raw );
+		error_log('IT HERE');
+		$x	= file_get_contents( $filename, true );
+		echo $x;
 		exit;
     }
 }
