@@ -62,7 +62,7 @@ if( window.location.href.indexOf('/pageEditProductType') !== -1 )
 			let request = 
 			{
 				id			: params['id'] 
-				,name		: Util.getById('pageEditProductTypeName')
+				,name		: Util.getById('pageEditProductTypeName').value
 				,attributes	: values
 			};
 
@@ -73,7 +73,14 @@ if( window.location.href.indexOf('/pageEditProductType') !== -1 )
 				,method	: 'POST'
 			}).then((response)=>
 			{
-				
+				if( !response.result )
+				{
+					Util.alert( response.msg );
+				}
+				else
+				{
+					Util.alert( 'Success', ()=>{ window.location.href= 'pageDashboard.php' });
+				}
 			});
 		});
 	});
